@@ -210,3 +210,26 @@ container, such that the container contains the most water.'''
                 final,right = max(final,height[right]*i), right - 1
 
         return final
+
+#Longest Substring without repeating
+""" Given a string, find the length of the longest substring without repeating
+    characters.
+"""
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        if (len(s) == 0):
+            return 0
+        maxLength = 0
+        seen = set()
+
+        length,i,j = len(s),0,0
+
+        while i < length and j < length:
+            if s[i] in seen:
+                seen.remove(s[j])
+                j += 1
+            else:
+                seen.add(s[i])
+                maxLength = max(maxLength, len(seen))
+                i += 1
+        return maxLength
+        

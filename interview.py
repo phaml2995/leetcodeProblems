@@ -232,4 +232,54 @@ container, such that the container contains the most water.'''
                 maxLength = max(maxLength, len(seen))
                 i += 1
         return maxLength
-        
+
+#Reverse a Linked List
+""" Given a singly Linked list, reverese it"""
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        prev = None
+        curr = head
+        nextNode = None
+
+        while curr:
+            nextNode = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nextNode
+        return prev
+
+# Remove Nth node From end of List
+"""Given a linked list, remove the n-th node from the end of
+list and return its head."""
+
+class Solution(object):
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        marker1 = head  """markers to traverse the list"""
+        marker2 = head
+        for i in range (n):
+            if not marker2.next:
+                head = head.next
+                return head
+            marker2 = marker2.next
+
+        while marker2.next:
+            marker1 = marker1.next
+            marker2 = marker2.next
+        marker1.next = marker1.next.next """set the next node to the last node"""
+        return head

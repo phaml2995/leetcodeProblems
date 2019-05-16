@@ -283,3 +283,63 @@ class Solution(object):
             marker2 = marker2.next
         marker1.next = marker1.next.next """set the next node to the last node"""
         return head
+
+#Add Two number
+"""You are given two non-empty linked lists representing two non-negative
+integers. The digits are stored in reverse order and each of their nodes
+contain a single digit. Add the two numbers and return it as a linked list.
+"""
+
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        temp = 0
+        curr = newNode = ListNode(0)
+        while l1 or l2 or temp:
+
+            if l1 is not None:
+                temp += l1.val
+                l1 = l1.next
+
+            if l2 is not None:
+                temp += l2.val
+                l2 = l2.next
+
+            temp,val = divmod(temp,10)
+            curr.next = ListNode(val)
+            curr = curr.next
+        return newNode.next
+
+#Merge Two sorted List: Using Linked List
+""" Merge Two sorted Linked lists and return in as a new list. The new list
+should be made by slicing together the nodes of the first two lists.
+"""
+
+class Solution(object):
+    def mergeTwoLists(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+
+        newNode = curr = ListNode(0)
+        while l1 and l2:
+            if l1.val < l2.val:
+                curr.next = l1
+                l1 = l1.next
+            else:
+                curr.next = l2
+                l2 = l2.next
+            curr = curr.next
+        curr.next = l1 or l2
+        return newNode.next

@@ -369,3 +369,37 @@ class Solution(object):
             curr = curr.next
         curr.next = l1 or l2
         return newNode.next
+
+"""Given a maximum number of characters in a line followed by a list of words,
+I want to return a collection of strings where each line contains as many words
+as possible concatenated by a space. The length of each string should not
+exceed the maximum length.
+
+There must be exactly one space between each word within each string of the output.
+Each word will be composed of lowercase letters from the English alphabet.
+There will be no punctuation.
+The maximum length of each word can be assumed to be constant.
+No single word will be longer than the given maximum length of characters in a line."""
+
+
+def wrapLines(line_length,words):
+    test_string = ""
+    space = " "
+    final = []   #list containing result strings
+    i = 0        #used for iteration
+    while (i < len(words)):
+        if (len(test_string.strip()) + len(words[i]) + len(space)) > int(line_length):
+            final.append(test_string.strip())
+
+            test_string = ""
+
+        else:
+            test_string += words[i] + space
+            i +=1
+    if test_string:
+        final.append(test_string.strip())
+    for word in final:
+        print(word)
+
+words = ["abc","xyz","foobar","cuckoo","seven","hello"]
+wrapLines("13",words)

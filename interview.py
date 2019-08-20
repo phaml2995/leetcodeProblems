@@ -31,7 +31,7 @@ if(anogram("public relations","crap built on lies")):
     print("It's an anogram!")
 else:
     print("Not an anogram!")
-
+#--------------------------------------------------
 #Pair Sum
 def pair_sum(arr,k):
     """
@@ -47,7 +47,7 @@ def pair_sum(arr,k):
                 return [i, newList[result]]
             newList[num] = i
         return newList
-
+#--------------------------------------------------
 #Find missing Elements
 #1st solutioj
 def finder(a1,a2):
@@ -68,7 +68,7 @@ def finder2(a1,a2):
             return num
         else:
             d[num] -= 1
-
+#--------------------------------------------------
 ##Merge Names
 def unique_names(names1,names2):
     both_names = names1 + names2
@@ -82,7 +82,7 @@ def unique_names(names1,names2):
 names1 = ["Ava", "Emma", "Olivia"]
 names2 = ["Olivia", "Sophia", "Emma"]
 print(unique_names(names1,names2))
-
+#--------------------------------------------------
 ##Palindrome
 def Palindrome(string):
     reversed_w = "".join(reversed(string)).lower()
@@ -101,10 +101,10 @@ def sum_func(n):
         return n%10 + sum_func(n/10)
 
 print(sum_func(43))
-
+#--------------------------------------------------
 #Reverse Integer
 def reverse(x):
-    if x < 0:
+    if x < 0:  // 1st Bruteforce
         sign = -1
     else:
         sign = 1
@@ -113,7 +113,22 @@ def reverse(x):
         return 0
     else:
         return rever
+#--------------------------------------------------
+    if x < 0: // 2nd Optimal
+        sign = -1
+    else:
+        sign = 1
 
+    final,remain = 0,abs(x)
+    while remain:
+        final = final * 10 + remain % 10
+        remain //= 10
+    final = final * sign
+    if ( final > ((2**31) -1) or final < (-2**31)):
+        return 0
+    else:
+        return final
+#--------------------------------------------------
 #Palindrome number
 class Solution(object):
     def isPalindrome(self, x):
@@ -126,7 +141,7 @@ class Solution(object):
             return False
         else:
             return True
-
+#--------------------------------------------------
 #Roman to Integer
 class Solution:
     def romanToInt(self, s: str) -> int:
@@ -144,6 +159,7 @@ class Solution:
             prevVal = curVal
 
         return finalVal
+#--------------------------------------------------
 #Integer to Roman
 """
 Given an integer, convert it into a roman numeral.
@@ -170,10 +186,10 @@ class Solution(object):
 
         return final
 
-
+#--------------------------------------------------
 #Remove Dups from sorted List
 class Solution:
-    def removeDuplicates(self, nums: List[int]) -> int:
+    def removeDuplicates(self, nums: List[int]) -> int: """Approach 1"""
         if len(nums) <= 0:
             return 0
         i = 0
@@ -188,6 +204,18 @@ class Solution:
         nums = nums[:newLength]
         return newLength
 
+     def removeDuplicates(self, nums: List[int]) -> int: """Approach 2"""
+            if not nums:
+                return 0
+
+            newLength = 1
+            for i in range(1,len(nums)):
+                if nums[newLength-1] != nums[i]:
+                    nums[newLength] = nums[i]
+                    newLength+=1
+            return newLength
+
+#--------------------------------------------------
 #Plus one
 class Solution:
     def plusOne(self, digits: List[int]) -> List[int]:
@@ -197,7 +225,7 @@ class Solution:
         strDigit = ''.join(str(i) for i in  digits)
         newDigits = [int(i) for i in str(int(strDigit)+1)]
         return newDigits
-
+#--------------------------------------------------
 #Length of the last word
 class Solution:
     def lengthOfLastWord(self, s: str) -> int:
@@ -206,7 +234,7 @@ class Solution:
             return 0
 
         return len(string[-1])
-
+#--------------------------------------------------
 #Reverse string
 class Solution:
     def reverseString(self, s: List[str]) -> None:
@@ -218,7 +246,7 @@ class Solution:
             s[l],s[r] = s[r],s[l]
             l+= 1
             r -= 1
-
+#--------------------------------------------------
 
 #Container with most Water
 '''Given n non-negative integers a1, a2, ..., an , where each represents a point at
@@ -236,12 +264,12 @@ container, such that the container contains the most water.'''
                 final,right = max(final,height[right]*i), right - 1
 
         return final
-
+#--------------------------------------------------
 #Longest Substring without repeating
 """ Given a string, find the length of the longest substring without repeating
     characters.
 """
-    def lengthOfLongestSubstring(self, s: str) -> int:
+    def lengthOfLongestSubstring(self, s: str) -> int: """Sliding window"""
         if (len(s) == 0):
             return 0
         maxLength = 0
@@ -258,9 +286,9 @@ container, such that the container contains the most water.'''
                 maxLength = max(maxLength, len(seen))
                 i += 1
         return maxLength
-
+#--------------------------------------------------
 #Reverse a Linked List
-""" Given a singly Linked list, reverese it"""
+""" Given a singly Linked list, reveres e it"""
 
 # Definition for singly-linked list.
 # class ListNode(object):
@@ -275,7 +303,7 @@ class Solution(object):
         :rtype: ListNode
         """
         prev = None
-        curr = head
+        curr = headn
         nextNode = None
 
         while curr:
@@ -284,7 +312,7 @@ class Solution(object):
             prev = curr
             curr = nextNode
         return prev
-
+#--------------------------------------------------
 # Remove Nth node From end of List
 """Given a linked list, remove the n-th node from the end of
 list and return its head."""
@@ -309,7 +337,7 @@ class Solution(object):
             marker2 = marker2.next
         marker1.next = marker1.next.next """set the next node to the last node"""
         return head
-
+#--------------------------------------------------
 #Add Two number
 """You are given two non-empty linked lists representing two non-negative
 integers. The digits are stored in reverse order and each of their nodes
@@ -344,7 +372,7 @@ class Solution(object):
             curr.next = ListNode(val)
             curr = curr.next
         return newNode.next
-
+#--------------------------------------------------
 #Merge Two sorted List: Using Linked List
 """ Merge Two sorted Linked lists and return in as a new list. The new list
 should be made by slicing together the nodes of the first two lists.
@@ -369,7 +397,7 @@ class Solution(object):
             curr = curr.next
         curr.next = l1 or l2
         return newNode.next
-
+#--------------------------------------------------
 """Given a maximum number of characters in a line followed by a list of words,
 I want to return a collection of strings where each line contains as many words
 as possible concatenated by a space. The length of each string should not
@@ -403,3 +431,368 @@ def wrapLines(line_length,words):
 
 words = ["abc","xyz","foobar","cuckoo","seven","hello"]
 wrapLines("13",words)
+
+#--------------------------------------------------
+"""Given a string containing just the characters '(', ')', '{', '}', '[' and ']',
+determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Note that an empty string is also considered valid."""
+
+
+def isValid(s):
+    """
+    :type s: str
+    :rtype: bool
+    """
+    openParen = ["(","[","{"]
+    checkValid = []
+    for paren in s:
+        if paren in openParen:
+            print(paren)
+            checkValid.append(paren)
+        elif (paren == ")" and (len(checkValid) != 0) and (checkValid[-1] == "(")):
+            print(paren)
+            checkValid.pop()
+        elif (paren == "]" and (len(checkValid) != 0) and (checkValid[-1] == "[")):
+            checkValid.pop()
+        elif (paren == "}" and (len(checkValid) != 0) and (checkValid[-1c] == "{") ):
+            print(checkValid[0])
+            print(paren)
+            checkValid.pop()
+        else:
+            return False
+    return (len(checkValid) == 0)
+#--------------------------------------------------
+
+"""Best time to buy and sell stock"""
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        if not prices:
+            return 0
+        buy_price = max(prices)
+        final = 0
+        for i in range(len(prices)):
+            if prices[i] < buy_price:
+                buy_price = prices[i]
+            else:
+                final = max(final,prices[i] - buy_price)
+
+
+        return final
+#--------------------------------------------------
+"""Given a paragraph and a list of banned words, return the most frequent word
+that is not in the list of banned words.  It is guaranteed there is at least
+one word that isn't banned, and that the answer is unique.
+Words in the list of banned words are given in lowercase, and free of
+punctuation.  Words in the paragraph are not case sensitive.The answer is in lowercase. """
+
+
+def word(para,banned):
+
+    punct = "!?',;.:"
+    for c in punct:
+        para = para.replace(c, " ")
+    wordList = para.lower().split()
+
+    print (wordList)
+    wordVal = {}
+    res = ""
+    for word in wordList:
+        if word not in banned:
+            if word in wordVal:
+                wordVal[word] +=1
+            else:
+                wordVal[word] = 1
+
+    for key in wordVal.keys():
+        if (res == "") or (wordVal[key] > wordVal[res]):
+            res = key
+
+    return res
+#--------------------------------------------------
+""" Unique Binary Search Tree: Given n, how many structurally
+unique BST's (binary search trees) that store values 1 ... n?"""
+
+class Solution(object):
+    def numTrees(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        dp = [0] * (n+1)
+        dp[0] = 1
+        dp[1] = 1
+
+        for i in range(2,n+1):
+            for j in range(1,i+1):
+                dp[i] += dp[j-1] * dp[i-j]
+
+        return dp[n]
+#--------------------------------------------------
+"""Valid Palindrome"""
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        if not s:
+            return True
+
+        i,j = 0,len(s) - 1
+        while i < j:
+            if not s[i].isalnum():
+                i += 1
+            elif not s[j].isalnum():
+                j -= 1
+
+            else:
+                if ( s[i].lower() == s[j].lower()):
+                    i+= 1
+                    j-=1
+                else:
+                    return False
+        return True
+#--------------------------------------------------
+"""Reverse Wprds In a String"""
+class Solution(object):
+    def reverseWords(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        new = s.strip().split()
+        i,j = 0,len(new)-1
+        while i < j:
+            new[i],new[j] = new[j],new[i]
+            i+=1
+            j-=1
+        return ' '.join(new)
+
+#--------------------------------------------------
+""""Symmetric Tree"""
+ Definition for a binary tree node.
+ class TreeNode(object):
+     def __init__(self, x):
+         self.val = x
+         self.left = None
+         self.right = None
+import collections
+
+class Solution(object):
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+         if not root:    # BFS
+             return True
+
+         queue = collections.deque([(root,root)])
+
+         while queue:
+             currNode1,currNode2 = queue.popleft()
+             if not currNode1 and not currNode2:
+                 continue
+             elif not currNode1 or not currNode2:
+                 return  False
+             elif currNode1.val != currNode2.val:
+                 return False
+             queue.append((currNode1.left,currNode2.right))
+             queue.append((currNode1.right,currNode2.left))
+
+         return True
+
+        def checksymmetric(treeLeft,treeRight): #DFS
+            if not treeLeft and not treeRight:
+                return True
+            elif treeLeft and treeRight:
+                return (treeLeft.val == treeRight.val
+                        and checksymmetric(treeLeft.left,treeRight.right)
+                        and checksymmetric(treeLeft.right,treeRight.left))
+            return False
+
+        return not root or checksymmetric(root.left,root.right)
+#--------------------------------------------------
+
+"""Kth Largest Element in an array"""
+
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        heap = nums[:k]
+        heapq.heapify(heap)
+        for num in nums[k:]:
+            if num > heap[0]:
+                heapq.heappushpop(heap,num)
+
+        return heap[0]
+#--------------------------------------------------
+
+"""Subsets"""
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        final = [[]]
+        for n in nums:
+            for i in range(len(final)):
+                final.append(final[i]+[n])
+        return final
+
+#--------------------------------------------------
+"""Find Peak Element"""
+
+class Solution:
+    def findPeakElement(self, nums: List[int]) -> int:
+        if len(nums) <= 1:  """Bruteforce approach"""
+            return 0
+        final = 0
+        for i in range(len(nums)-1):
+            if i + 2 == len(nums):
+                if nums[i+1] > nums[i]:
+                    return i+1
+            if  nums[i] > nums[i+1] and nums[i] > nums[i-1]:
+                return i
+#****************************************************
+        l,r = 0,len(nums)-1    """Binary Seach"""
+        while l < r:
+            mid = l + (r-l)//2
+            curr = nums[mid]
+            if (curr > nums[mid+1]):
+                r = mid
+            else:
+                l = mid + 1
+        return l
+#--------------------------------------------------
+"""Permutations"""
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+
+
+        def get_perm(i):
+            if i == len(nums) - 1:
+                final.append(nums[:])
+                return
+
+            for j in range(i,len(nums)):
+                nums[i],nums[j] = nums[j],nums[i]
+                get_perm(i+1)
+                nums[i],nums[j] = nums[j],nums[i]
+
+
+
+        final = []
+        get_perm(0)
+        return final
+#--------------------------------------------------
+"""Find All Duplicates in an array"""
+
+def findDuplicates(self, nums: List[int]) -> List[int]:
+        dic = {}
+        final = []
+        for num in nums:
+            if num in dic:
+                dic[num] += 1
+            else:
+                dic[num] = 1
+
+        for key in dic.keys():
+            if dic[key] > 1:
+                final.append(key)
+
+
+def findDuplicates(self, nums: List[int]) -> List[int]:
+
+        count = 0
+        nums = sorted(nums)
+
+        for i in range(1,len(nums)):
+            if nums[i] == nums[i-1]:
+                nums[i],nums[count] = nums[count],nums[i]
+                count +=1
+
+
+        return nums[:count]
+#--------------------------------------------------
+
+"""Count and Say"""
+
+class Solution(object):
+    def countAndSay(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        s = "1"
+        # for _ in range(n-1):
+        #     s = ''.join(str(len(list(group))) + key for key,group in itertools.groupby(s))
+        # return s
+
+        for _ in range(n-1):
+            s = self.next_num(s)
+        return s
+
+    def next_num(self,s):
+        final,i = "",0
+        while i < len(s):
+            count = 1
+            while i + 1 < len(s) and s[i] == s[i+1]:
+                i+= 1
+                count +=1
+            final += str(count) + s[i]
+            i+=1
+        return final
+
+#--------------------------------------------------
+"""Group Anagrams"""
+
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        dic = {}
+        for word in strs:
+            hsh = 1
+            for char in word:
+                hsh *= hash(char)
+            if hsh in dic:
+                dic[hsh].append(word)
+            else:
+                dic[hsh] = [word]
+
+        final = []
+        for key in dic.keys():
+            final.append(dic[key])
+
+        return final
+#--------------------------------------------------
+
+"""ZigZag Conversion"""
+class Solution:
+    def convert(self, s: str, numRows: int) -> str:
+        if numRows == 1 or numRows > len(s):
+            return s
+
+        final = [""]*numRows
+        index,step = 0,1
+
+        for char in s:
+            final[index] += char
+            if index == 0:
+                step = 1
+            if index == numRows -1:
+                step = -1
+            index += step
+
+        return ''.join(final)

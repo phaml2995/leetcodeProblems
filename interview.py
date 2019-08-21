@@ -796,3 +796,248 @@ class Solution:
             index += step
 
         return ''.join(final)
+
+#---------------------------------------------------
+"""Merge Sorted Arrays """"
+
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+        i,j, last = m-1,n-1, m+n-1
+
+        while i >= 0 and j>=0:
+            if nums2[j] > nums1[i]:
+                nums1[last],j = nums2[j],j-1
+
+            else:
+                nums1[last],i = nums1[i],i-1
+
+            last -= 1
+
+        if i < 0:
+            nums1[:j+1] = nums2[:j+1]
+
+#----------------------------------------------------
+"""Number Of Islands"""
+
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid:
+            return 0
+        r,c = len(grid),len(grid[0])
+        visited = [[False] * c for _ in range(r)]
+        numOfIslands = 0
+
+        for i in range(r):
+            for j in range(c):
+                if grid[i][j] == '1' and not visited[i][j]:
+                    numOfIslands += 1
+                    self.dfs(grid,i,j,visited)
+        return numOfIslands
+
+
+    def dfs(self,grid,i,j,visited):
+        if not(0 <= i < len(grid)) or not (0 <= j < len(grid[0])) or grid[i][j] == '0' or visited[i][j]:
+            return
+
+        visited[i][j] = True
+        self.dfs(grid,i+1,j,visited)
+        self.dfs(grid,i-1,j,visited)
+        self.dfs(grid,i,j+1,visited)
+        self.dfs(grid,i,j-1,visited)
+
+#-----------------------------------------------------
+"""Unique Paths"""
+
+class Solution(object):
+    def uniquePaths(self, m, n):
+        """
+        :type m: int
+        :type n: int
+        :rtype: int
+        """
+        def computeUP(x,y):
+            if x==y==0:
+                return 1
+
+            if uniquePaths[x][y] == 0:
+                ways_top = 0 if x == 0 else computeUP(x-1,y)
+                ways_left = 0 if y == 0 else computeUP(x,y-1)
+                uniquePaths[x][y] = ways_top + ways_left
+            return uniquePaths[x][y]
+
+        uniquePaths = [[0]* n for _ in range(m)]
+        return computeUP(m-1,n-1)
+
+"""Word Search"""
+
+class Solution(object):
+    def exist(self, board, word):
+        """
+        :type board: List[List[str]]
+        :type word: str
+        :rtype: bool
+        """
+        r,c = len(board),len(board[0])
+
+        for i in range(r):
+            for j in range(c):
+                if self.dfs(board,i,j,word):
+                    return True
+
+        return False
+
+
+
+    def dfs(self,grid,i,j,word):
+        if len(word) == 0:
+            return True
+
+        if not (0 <= i < len(grid)) or not (0 <= j < len(grid[0])) or not (word[0] == grid[i][j]):
+            return False
+
+        temp = grid[i][j]
+        grid[i][j] = ''
+
+        found = self.dfs(grid,i-1,j,word[1:]) or  self.dfs(grid,i+1,j,word[1:]) or  self.dfs(grid,i,j-1,word[1:]) or self.dfs(grid,i,j+1,word[1:])
+
+        grid[i][j] = temp
+
+        return found
+#---------------------------------------------------------
+"""Add Binary"""
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        i,j = len(a)-1,len(b)-1
+        carry,final = 0, ""
+
+        while i >=0 or j >=0 or carry:
+            if i >= 0:
+                carry += int(a[i])
+                i -= 1
+            if j >= 0:
+                carry += int(b[j])
+                j -= 1
+
+            final = str(carry%2) + final
+            carry //= 2
+
+        return final
+#------------------------------------------------------------
+"""Validate a Binary Search Tree"""
+
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        final = []
+        self.inOrder(root,final)
+        for i in range(1,len(final)):
+            if final[i] <= final[i-1]:
+                return False
+        return True
+
+
+
+    def inOrder(self,root,final):
+        if not root:
+            return
+        self.inOrder(root.left,final)
+        final.append(root.val)
+        self.inOrder(root.right,final)
+#------------------------------------------------------------
+"""Find Minimum in Rotated Sorted Array"""
+
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        if not nums:
+            return
+
+        l,r = 0,len(nums)-1
+
+        while l < r:
+            mid = l + (r-l) // 2
+            curr = nums[mid]
+            if curr  > nums[r]:
+                l = mid + 1
+            else:
+                r = mid
+        return nums[l]
+#----------------------------------------------------------------------
+""" Subarray Sum equals K"""
+
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        cache, Sum = {0:1}, 0
+        ans = 0
+        for i, n in enumerate(nums):
+            Sum = Sum + n
+            if Sum-k in cache:
+                ans += cache[Sum-k]
+            if Sum in cache:
+                cache[Sum] += 1
+            else:
+                cache[Sum] = 1
+        return ans
+#----------------------------------------------------------------------
+"""Construct BT from Pre and In"""
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def buildTree(self, preorder, inorder):
+        """
+        :type preorder: List[int]
+        :type inorder: List[int]
+        :rtype: TreeNode
+        """
+        if not inorder:
+            return
+
+        root_val = preorder[0]
+        root = TreeNode(root_val)
+
+        inOrder_idx  = inorder.index(root_val)
+        leftST_in = inorder[:inOrder_idx]
+        rightST_in = inorder[inOrder_idx+1:]
+        leftST_pre = preorder[1:len(leftST_in)+1]
+        rightST_pre = preorder[len(leftST_pre)+1:]
+
+        root.left = self.buildTree(leftST_pre,leftST_in)
+        root.right = self.buildTree(rightST_pre, rightST_in)
+
+        return root
+#----------------------------------------------------------
+""" Same Tree"""
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def isSameTree(self, p, q):
+
+        """
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: bool
+        """
+        if not q or not p:
+            return p == q
+
+        if p.val != q.val:
+            return False
+
+        lc = self.isSameTree(p.left,q.left)
+        rc = self.isSameTree(p.right,q.right)
+        return lc and rc

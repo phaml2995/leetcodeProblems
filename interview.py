@@ -1041,3 +1041,34 @@ class Solution(object):
         lc = self.isSameTree(p.left,q.left)
         rc = self.isSameTree(p.right,q.right)
         return lc and rc
+
+#----------------------------------------------
+"""Invert a BT"""
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def invertTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        if not root:
+            return
+
+        queue = [root]
+
+        while queue:
+            currNode = queue.pop(0)
+            if (currNode.left):
+                queue.append(currNode.left)
+            if (currNode.right):
+                queue.append(currNode.right)
+            currNode.left, currNode.right = currNode.right, currNode.left
+
+
+        return root

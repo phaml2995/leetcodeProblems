@@ -562,7 +562,7 @@ class Solution(object):
                     return False
         return True
 #--------------------------------------------------
-"""Reverse Wprds In a String"""
+"""Reverse Words In a String"""
 class Solution(object):
     def reverseWords(self, s):
         """
@@ -1051,7 +1051,7 @@ class Solution(object):
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
+class Solution(object):    """-------BFS-------"""
     def invertTree(self, root):
         """
         :type root: TreeNode
@@ -1072,3 +1072,53 @@ class Solution(object):
 
 
         return root
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object): """---------DFS--------"""
+    def invertTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        if not root:
+            return
+
+        queue = [root]
+
+        while queue:
+            currNode = queue.pop(0)
+            if (currNode.left):
+                queue.append(currNode.left)
+            if (currNode.right):
+                queue.append(currNode.right)
+            currNode.left, currNode.right = currNode.right, currNode.left
+
+
+        return root
+#-------------------------------------------------------
+"""LCA of a Binary Tree"""
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if not root:
+            return
+
+        if root in (p,q): return root
+
+        left = self.lowestCommonAncestor(root.left,p,q)
+        right = self.lowestCommonAncestor(root.right,p,q)
+
+        return root if left and right else (left or right)
